@@ -1,0 +1,85 @@
+﻿<div class="flex items-center justify-center min-h-screen bg-white my-6">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md animate-fade-in-up">
+        <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Registration</h2>
+        <form class="grid grid-cols-1 gap-4" id="registerForm">
+            <div class="grid grid-cols-2 gap-4">
+                <input id="firstName" type="text" placeholder="First Name" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
+                <input id="secondName" type="text" placeholder="Surname" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
+            </div>
+
+            <div class="m-0">
+                <label id="fileLabel" class="block border-2 border-dashed border-[#0db865] rounded-xl p-6 text-center cursor-pointer relative">
+                    <input type="file" onchange="openModalWindow(event)" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" id="fileInput">
+                    <span class="text-gray-500">Перетягніть або виберіть фото</span>
+                </label>
+            </div>
+            
+            <div class="flex items-center justify-center">
+                <img id="formPhoto" class="rounded-full hidden" />
+            </div>
+
+            <div class="flex">
+                <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-[#0db865] bg-opacity-[15%] border rounded-e-0 border-gray-300 border-e-0 rounded-s-lg">
+                    <i class="fa-solid fa-envelope text-gray-500"></i>
+                </span>
+                <input type="email" id="email" class="w-full p-3 border rounded-e-lg focus:ring-2 focus:ring-[#0db865]" placeholder="Email">
+            </div>
+
+            <div class="flex">
+                <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-[#0db865] bg-opacity-[15%] border rounded-e-0 border-gray-300 border-e-0 rounded-s-lg">
+                    <i class="fa-solid fa-phone text-gray-500"></i>
+                </span>
+                <input type="tel" id="phone" class="w-full p-3 border rounded-e-lg focus:ring-2 focus:ring-[#0db865]" placeholder="Phone">
+            </div>
+
+            <div class="m-0">
+                <input id="password" type="password" placeholder="Password" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
+            </div>
+
+            <div class="m-0">
+                <input id="confirmPassword" type="password" placeholder="Confirm Password" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <input type="checkbox" id="terms" class="accent-[#0db865]" required>
+                <label for="terms" class="text-sm">I agree to the terms and conditions</label>
+            </div>
+
+            <button type="submit" class="w-full bg-[#0db865] hover:bg-[#0aa650] text-white py-3 rounded-lg transition-all duration-300">
+                Register
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/imask/7.6.1/imask.min.js"></script>
+
+<script>
+    IMask(
+        document.getElementById('phone'),
+        {
+            mask: '+{38}(000)000-00-00'
+        }
+    )
+</script>
+
+<script src="/js/axios.min.js"></script>
+<script src="/js/register.js"></script>

@@ -1,0 +1,50 @@
+﻿<link href="/css/cropper.min.css" rel="stylesheet" />
+
+<div id="fileModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg w-[400px]">
+        <div class="flex justify-between items-center p-4 border-b">
+            <h5 class="text-lg font-semibold">Обріжте фото</h5>
+            <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                ✕
+            </button>
+        </div>
+
+        <div class="p-4">
+            <div class="flex items-center justify-center mb-2">
+                <img id="croppingImage" class="h-[300px]"
+                     src="" />
+            </div>
+
+            <div class="flex items-center justify-center mb-6">
+                <img id="previewImage" class="h-[100px] rounded-full"
+                     src="" />
+            </div>
+
+            <div class="flex justify-center">
+                <div class="grid grid-cols-4 gap-4">
+                    <button id="leftTurn" class="btn-action">
+                        ↺
+                    </button>
+                    <button id="rightTurn" class="btn-action">
+                        ↻
+                    </button>
+                    <button id="horizontalTurn" class="btn-action">
+                        ↔️
+                    </button>
+                    <button id="verticalTurn" class="btn-action">
+                        ↕️
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-2 p-4 border-t">
+            <button id="saveBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md">Зберегти</button>
+            <button id="cancelBtn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md">Закрити</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/cropper.min.js"></script>
+
+<script src="/js/photoCropperModal.js"></script>
