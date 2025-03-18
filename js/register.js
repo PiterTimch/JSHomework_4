@@ -59,8 +59,8 @@ function processRegistration(e) {
         }
     })
         .then(response => {
-            console.log("Success:", response.data);
-            localStorage.currentUser = JSON.stringify(user);
+            console.log("Success:", response.data.token);
+            localStorage.token = response.data.token;
             location.href = "/pages/welcomePage.html";
         })
         .catch(error => {
