@@ -1,13 +1,78 @@
 ﻿<header class="bg-[#65ad8a] bg-opacity-90 shadow-md">
-    <div class="mx-auto flex items-center justify-between p-4">
+    <div class="mx-auto flex items-center justify-between p-4 relative">
         <a href="/" class="text-white text-2xl font-bold">Work with server</a>
-        <nav class="hidden md:flex space-x-6">
-            <a href="/" class="text-white hover:text-gray-200 transition">Main</a>
-            <a href="/" class="text-white hover:text-gray-200 transition">Register</a>
-            <a href="/pages/login.html" class="text-white hover:text-gray-200 transition">Login</a>
-        </nav>
-        <button class="md:hidden text-white text-2xl">
-            <i class="fa-solid fa-bars"></i>
-        </button>
+
+        <div id="anonimMenu" class="relative ">
+            <button id="anonimMenuButton" class="text-white text-4xl focus:outline-none">
+                <i class="fa-solid fa-user"></i>
+            </button>
+
+            <div id="anonimPopup" class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg opacity-0 scale-95 transform transition-all duration-200 ease-out pointer-events-none">
+                <a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition rounded-lg">Register</a>
+                <a href="/pages/login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Login</a>
+            </div>
+        </div>
+
+        <div id="loginMenu" class="relative hidden">
+            <button id="userMenuButton" class="h-[50px] w-[50px] focus:outline-none">
+                <img class="rounded-full" src="https://goose.itstep.click/images/c0057e18-91eb-4691-8165-aabf40d6d391.jpg" alt="Alternate Text" />
+            </button>
+
+            <div id="userPopup" class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg opacity-0 scale-95 transform transition-all duration-200 ease-out pointer-events-none">
+                <a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition rounded-lg">Prifile</a>
+                <a href="/pages/login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Log out</a>
+            </div>
+        </div>
     </div>
 </header>
+
+<style>
+    #userPopup {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+    }
+
+        #userPopup.show {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+    #anonimPopup {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+    }
+
+        #anonimPopup.show {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        function setupDropdown(menuButtonId, menuId) {
+            const menuButton = document.getElementById(menuButtonId);
+            const menu = document.getElementById(menuId);
+
+            if (!menuButton || !menu) return;
+
+            menuButton.addEventListener("click", () => {
+                menu.classList.toggle("show");
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!menuButton.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.remove("show");
+                }
+            });
+        }
+
+        setupDropdown("anonimMenuButton", "anonimPopup");
+        setupDropdown("userMenuButton", "userPopup");
+    });
+</script>
+
