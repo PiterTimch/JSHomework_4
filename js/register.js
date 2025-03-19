@@ -26,7 +26,7 @@ function showMessage(jsonMessage) {
         if (inputElement) {
             focusInput(inputElement);
 
-            const parentDiv = inputElement.closest("div"); // Знаходимо батьківський div
+            const parentDiv = inputElement.closest("div");
 
             if (parentDiv && (!parentDiv.nextElementSibling || !parentDiv.nextElementSibling.classList.contains("error-message"))) {
                 const errorMessage = document.createElement("span");
