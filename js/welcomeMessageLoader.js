@@ -3,39 +3,25 @@ const userEmail = document.getElementById("userEmail");
 const userPhone = document.getElementById("userPhone");
 const userPhoto = document.getElementById("userPhoto");
 
-function onloadProcess() {
-    const token = localStorage.getItem("token");
-    if (token) {
-        const decoded = jwt_decode(token);
-        console.log(decoded);
-    } else {
-        console.log("Токен не знайдено");
-    }
-
-    axios.get("https://goose.itstep.click/api/Account/profile", {
-        headers: {
-            'accept': '*/*',
-            'Authorization': `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        console.log("Success:", response.data);
-        const user = response.data;
-        userName.innerText = `${user.firstName} ${user.secondName}`;
-        userEmail.innerText = user.email;
-        userPhone.innerText = user.phone;
-        userPhoto.src = `https://goose.itstep.click/images/${user.photo}`;
-    })
-    .catch(error => {
-        console.error("Error:", error);
+async function waitForUserData() {
+    return new Promise((resolve) => {
+        const interval = setInterval(() => {
+            const user = localStorage.getItem("user");
+            if (user) {
+                clearInterval(interval);
+                resolve(JSON.parse(user));
+            }
+        }, 100);
     });
+}
 
-    //const user = JSON.parse(localStorage.currentUser);
+async function onloadProcess() {
+    const user = await waitForUserData();
 
-    //userName.innerText = `${user.firstName} ${user.secondName}`;
-    //userEmail.innerText = user.email;
-    //userPhone.innerText = user.phone;
-    //userPhoto.src = user.photo;
+    userName.innerText = `${user.firstName} ${user.secondName}`;
+    userEmail.innerText = user.email;
+    userPhone.innerText = user.phone;
+    userPhoto.src = `https://goose.itstep.click/images/${user.photo}`;
 }
 
 window.onload = onloadProcess;
