@@ -40,9 +40,10 @@ function openModalWindow(e) {
                 aspectRatio: 1,
                 viewMode: 1,
                 autoCrop: true,
-                crop() {
-                    updatePreview();
-                }
+                preview: ".img-preview"
+                //crop() {
+                //    updatePreview();
+                //}
             });
 
 
@@ -50,12 +51,14 @@ function openModalWindow(e) {
     }
 }
 
-function updatePreview() {
-    if (cropper) {
-        const base64 = cropper.getCroppedCanvas().toDataURL();
-        previewImage.src = base64;
-    }
-}
+//function updatePreview() {
+//    if (cropper) {
+//        const canvas = cropper.getCroppedCanvas();
+//        if (canvas) {
+//            previewImage.src = canvas.toDataURL();
+//        }
+//    }
+//}
 
 function closeModalWindow() {
     modal.classList.add("hidden");
