@@ -15,7 +15,7 @@
 
         <div id="loginMenu" class="relative hidden">
             <button id="userMenuButton" class="h-[50px] w-[50px] focus:outline-none">
-                <img id="profileIcon" class="rounded-full" src="" alt="Alternate Text" />
+                <img id="profileIcon" class="rounded-full border-2 border-[#fff] shadow-lg" src="" alt="Alternate Text" />
             </button>
 
             <div id="userPopup" class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg opacity-0 scale-95 transform transition-all duration-200 ease-out pointer-events-none">
@@ -52,8 +52,6 @@
         }
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-
 <script>
     document.addEventListener("DOMContentLoaded", async () => {
         function setupDropdown(menuButtonId, menuId) {
@@ -84,7 +82,7 @@
             const token = localStorage.getItem("token");
 
             if (!token) {
-                console.log("Токен не знайдено");
+                console.log("Invalid token");
                 return;
             }
 
@@ -95,18 +93,14 @@
                         'Authorization': `Bearer ${token}`
                     }
                 });
-
-                console.log("Success:", response.data);
                 const user = response.data;
 
-                // ✅ Збереження даних у localStorage
                 localStorage.setItem("user", JSON.stringify(user));
 
                 if (user.photo) {
                     profileIcon.src = `https://goose.itstep.click/images/${user.photo}`;
                 }
 
-                // ✅ Відображення меню користувача
                 loginMenu.classList.remove("hidden");
                 anonimMenu.classList.add("hidden");
 
