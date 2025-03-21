@@ -1,0 +1,35 @@
+﻿<div class="grid grid-cols-6 h-screen">
+    <nav class="bg-[#45755e] text-white p-4 col-span-1 min-h-screen">
+        <ul class="space-y-2">
+            <li>
+                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('usersDropdown')">
+                    Користувачі
+                </button>
+                <ul id="usersDropdown" class="hidden pl-4 space-y-1">
+                    <li><a href="users/add.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Додати</a></li>
+                    <li><a href="users/delete.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Видалити</a></li>
+                </ul>
+            </li>
+            <li>
+                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('postsDropdown')">
+                    Пости
+                </button>
+                <ul id="postsDropdown" class="hidden pl-4 space-y-1">
+                    <li><a href="posts/create.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Створити</a></li>
+                    <li><a href="posts/manage.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Керувати</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Контент -->
+    <div class="col-span-5 p-4">
+        <iframe name="contentFrame" class="w-full h-full border rounded-lg" src="dashboard.html"></iframe>
+    </div>
+</div>
+
+<script>
+    function toggleDropdown(id) {
+        document.getElementById(id).classList.toggle("hidden");
+    }
+</script>

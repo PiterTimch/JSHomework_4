@@ -35,7 +35,7 @@ function processRegistration(e) {
         .then(response => {
             console.log("Success:", response.data.token);
             localStorage.token = response.data.token;
-            location.href = "/pages/welcomePage.html";
+            location.href = "/";
         })
         .catch(error => {
             showMessage(error);

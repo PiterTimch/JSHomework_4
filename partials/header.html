@@ -23,6 +23,17 @@
                 <a href="/" onclick="logout()" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Log out</a>
             </div>
         </div>
+
+        <div id="adminMenu" class="relative hidden">
+            <button id="adminMenuButton" class="h-[50px] w-[50px] focus:outline-none">
+                <img id="profileIcon" class="rounded-full border-2 border-[#fff] shadow-lg" src="https://static.vecteezy.com/system/resources/thumbnails/019/194/935/small_2x/global-admin-icon-color-outline-vector.jpg" alt="Alternate Text" />
+            </button>
+
+            <div id="adminPopup" class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg opacity-0 scale-95 transform transition-all duration-200 ease-out pointer-events-none">
+                <a href="/pages/adminPanel.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition rounded-lg">Admin panel</a>
+                <a href="/" onclick="logout()" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Log out</a>
+            </div>
+        </div>
     </div>
 </header>
 
@@ -50,72 +61,21 @@
             transform: scale(1);
             pointer-events: auto;
         }
+
+    #adminPopup {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+    }
+
+        #adminPopup.show {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
 </style>
 
-<script>
-    document.addEventListener("DOMContentLoaded", async () => {
-        function setupDropdown(menuButtonId, menuId) {
-            const menuButton = document.getElementById(menuButtonId);
-            const menu = document.getElementById(menuId);
-
-            if (!menuButton || !menu) return;
-
-            menuButton.addEventListener("click", () => {
-                menu.classList.toggle("show");
-            });
-
-            document.addEventListener("click", (e) => {
-                if (!menuButton.contains(e.target) && !menu.contains(e.target)) {
-                    menu.classList.remove("show");
-                }
-            });
-        }
-
-        setupDropdown("anonimMenuButton", "anonimPopup");
-        setupDropdown("userMenuButton", "userPopup");
-
-        const profileIcon = document.getElementById("profileIcon");
-        const loginMenu = document.getElementById("loginMenu");
-        const anonimMenu = document.getElementById("anonimMenu");
-
-        async function loadUserData() {
-            const token = localStorage.getItem("token");
-
-            if (!token) {
-                console.log("Invalid token");
-                return;
-            }
-
-            try {
-                const response = await axios.get("https://goose.itstep.click/api/Account/profile", {
-                    headers: {
-                        'accept': '*/*',
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const user = response.data;
-
-                localStorage.setItem("user", JSON.stringify(user));
-
-                if (user.photo) {
-                    profileIcon.src = `https://goose.itstep.click/images/${user.photo}`;
-                }
-
-                loginMenu.classList.remove("hidden");
-                anonimMenu.classList.add("hidden");
-
-            } catch (error) {
-                console.error("Error:", error);
-            }
-        }
-
-        await loadUserData();
-    });
-
-    function logout() {
-        localStorage.clear();
-        window.location.href = "/";
-    }
-</script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+<script src="/js/headerConfig.js"></script>
 
 
