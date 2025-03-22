@@ -47,7 +47,7 @@
                 return;
             }
             else if (user.image) {
-                profileIcon.src = `https://goose.itstep.click/images/${user.image}`;
+                profileIcon.src = `https://goose.itstep.click/images/100_${user.image}`;
             }
 
             loginMenu.classList.remove("hidden");

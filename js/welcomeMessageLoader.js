@@ -28,7 +28,7 @@ function onloadProcess() {
         userName.innerText = `${user.firstName} ${user.secondName}`;
         userEmail.innerText = user.email;
         userPhone.innerText = user.phone;
-        userPhoto.src = `https://goose.itstep.click/images/${user.photo}`;
+        userPhoto.src = `https://goose.itstep.click/images/800_${user.photo}`;
 
         loading.classList.add("hidden");
     });
