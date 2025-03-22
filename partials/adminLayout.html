@@ -2,29 +2,53 @@
     <nav class="bg-[#45755e] text-white p-4 col-span-1 min-h-screen">
         <ul class="space-y-2">
             <li>
-                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('usersDropdown')">
-                    Користувачі
+                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('dashboardDropdown')">
+                    Dashboard
                 </button>
-                <ul id="usersDropdown" class="hidden pl-4 space-y-1">
-                    <li><a href="users/add.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Додати</a></li>
-                    <li><a href="users/delete.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Видалити</a></li>
+                <ul id="dashboardDropdown" class="hidden pl-4 space-y-1">
+                    <li><a href="/pages/adminPages/dashboard.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Analytics</a></li>
+                </ul>
+            </li>
+            <li>
+                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('categoriesDropdown')">
+                    Categories
+                </button>
+                <ul id="categoriesDropdown" class="hidden pl-4 space-y-1">
+                    <li><a href="/pages/adminPages/categoriesCreate.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Add</a></li>
+                    <li><a href="/pages/adminPages/underDevelopment.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Edit</a></li>
                 </ul>
             </li>
             <li>
                 <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('postsDropdown')">
-                    Пости
+                    Posts
                 </button>
                 <ul id="postsDropdown" class="hidden pl-4 space-y-1">
-                    <li><a href="posts/create.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Створити</a></li>
-                    <li><a href="posts/manage.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Керувати</a></li>
+                    <li><a href="/pages/adminPages/blogsCreate.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Create</a></li>
+                    <li><a href="/pages/adminPages/underDevelopment.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Edit</a></li>
+                </ul>
+            </li>
+            <li>
+                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('feedbacksDropdown')">
+                    Feedbacks
+                </button>
+                <ul id="feedbacksDropdown" class="hidden pl-4 space-y-1">
+                    <li><a href="/pages/adminPages/feedbacksCreate.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Write</a></li>
+                </ul>
+            </li>
+            <li>
+                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('productsDropdown')">
+                    Products
+                </button>
+                <ul id="productsDropdown" class="hidden pl-4 space-y-1">
+                    <li><a href="/pages/adminPages/productCreate.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Create</a></li>
+                    <li><a href="/pages/adminPages/underDevelopment.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Edit</a></li>
                 </ul>
             </li>
         </ul>
     </nav>
 
-    <!-- Контент -->
     <div class="col-span-5 p-4">
-        <iframe name="contentFrame" class="w-full h-full border rounded-lg" src="dashboard.html"></iframe>
+        <iframe name="contentFrame" class="w-full h-full border rounded-lg" src="/pages/adminPages/dashboard.html"></iframe>
     </div>
 </div>
 

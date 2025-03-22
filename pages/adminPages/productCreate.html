@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="flex items-center justify-center min-h-screen bg-white my-6">
+        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md animate-fade-in-up">
+            <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Create Product</h2>
+            <form class="grid grid-cols-1 gap-4" id="createProductForm">
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                    <input id="title" type="text" placeholder="Product Title" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
+                </div>
+
+                <div>
+                    <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
+                    <input id="priority" type="number" placeholder="Priority" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
+                </div>
+
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <select id="category" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
+                        <option>Category 1</option>
+                        <option>Category 2</option>
+                        <option>Category 3</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+                    <input id="price" type="number" step="0.01" placeholder="Price" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
+                </div>
+
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea id="description" placeholder="Product Description" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-[#0db865] hover:bg-[#0aa650] text-white py-3 rounded-lg transition-all duration-300">
+                    Create Product
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out;
+        }
+    </style>    
+</body>
+</html>
