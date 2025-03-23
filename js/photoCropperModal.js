@@ -41,24 +41,12 @@ function openModalWindow(e) {
                 viewMode: 1,
                 autoCrop: true,
                 preview: ".img-preview"
-                //crop() {
-                //    updatePreview();
-                //}
             });
 
 
         }
     }
 }
-
-//function updatePreview() {
-//    if (cropper) {
-//        const canvas = cropper.getCroppedCanvas();
-//        if (canvas) {
-//            previewImage.src = canvas.toDataURL();
-//        }
-//    }
-//}
 
 function closeModalWindow() {
     modal.classList.add("hidden");

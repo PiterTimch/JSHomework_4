@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Categories</h2>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+                <thead class="bg-[#0db865] text-white">
+                    <tr>
+                        <th class="py-3 px-4 text-left">#</th>
+                        <th class="py-3 px-4 text-left">Title</th>
+                        <th class="py-3 px-4 text-left">Priority</th>
+                        <th class="py-3 px-4 text-left">Slug</th>
+                        <th class="py-3 px-4 text-left">Image</th>
+                    </tr>
+                </thead>
+                <tbody id="categoriesTableBody">
+                    <tr>
+                        <td colspan="5" class="text-center py-4">Loading...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function fetchCategories() {
+            try {
+                const response = await axios.get('https://goose.itstep.click/api/Categories/list');
+                const categories = response.data;
+                const tableBody = document.getElementById('categoriesTableBody');
+
+                tableBody.innerHTML = '';
+
+                categories.forEach((category, index) => {
+                    const row = document.createElement('tr');
+                    row.className = "border-b hover:bg-gray-100";
+                    row.innerHTML = `
+                            <td class="py-3 px-4">${index + 1}</td>
+                            <td class="py-3 px-4">${category.title}</td>
+                            <td class="py-3 px-4">${category.priority}</td>
+                            <td class="py-3 px-4">${category.urlSlug}</td>
+                            <td class="py-3 px-4">
+                                <img src="https://goose.itstep.click/images/200_${category.image}" class="w-[100px] h-[100px] object-cover rounded-lg" alt="${category.title}">
+                            </td>
+                        `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+                document.getElementById('categoriesTableBody').innerHTML = `
+                        <tr><td colspan="5" class="text-center py-4 text-red-500">Failed to load categories</td></tr>
+                    `;
+            }
+        }
+
+        fetchCategories();
+    </script>
+
+</body>
+</html>

@@ -20,8 +20,6 @@ function getUserDataFromServer() {
 
 function onloadProcess() {
 
-    loading.classList.remove("hidden");
-
     getUserDataFromServer().then(user => {
         if (!user) return;
 

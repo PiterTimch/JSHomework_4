@@ -1,25 +1,30 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Category Form</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Підключаємо speakingurl через CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/speakingurl/13.0.0/speakingurl.min.js"></script>
+
+    <script src="/js/loader.js"></script>
 </head>
 <body>
     <div class="flex items-center justify-center min-h-screen bg-white my-6">
         <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md animate-fade-in-up">
             <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Category</h2>
             <form class="grid grid-cols-1 gap-4" id="categoryForm">
-                <input type="text" id="title" placeholder="Title" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
+                <input type="text" id="title" placeholder="Title" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]" oninput="generateSlug()">
 
                 <input type="number" id="priority" placeholder="Priority" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
 
-                <input type="text" id="urlSlug" placeholder="URL Slug" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
+                <input type="text" id="urlSlug" placeholder="URL Slug" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]" readonly>
 
                 <div class="m-0">
                     <label id="fileLabel" class="block border-2 border-dashed border-[#0db865] rounded-xl p-6 text-center cursor-pointer relative">
-                        <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" id="fileInput">
+                        <input type="file" onchange="openModalWindow(event)" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" id="fileInput">
                         <span class="text-gray-500">Перетягніть або виберіть фото</span>
                     </label>
                 </div>
@@ -27,6 +32,8 @@
                 <div class="flex items-center justify-center">
                     <img id="formPhoto" class="rounded-full hidden" />
                 </div>
+
+                <p id="errorMessage" class="text-sm mb-2 text-[#c70000]"></p>
 
                 <button type="submit" class="w-full bg-[#0db865] hover:bg-[#0aa650] text-white py-3 rounded-lg transition-all duration-300">
                     Save Category
@@ -52,6 +59,46 @@
             animation: fade-in-up 0.8s ease-out;
         }
     </style>
+
+    <script>
+        loadDOM("/partials/photoCropperModal.html");
+    </script>
+
+    <script src="/js/axios.min.js"></script>
+
+    <script>
+        const categoryForm = document.getElementById("categoryForm");
+        const errorMessage = document.getElementById("errorMessage");
+
+        function generateSlug() {
+            const title = document.getElementById("title").value;
+            document.getElementById("urlSlug").value = getSlug(title, { lang: 'uk' });
+        }
+
+        function showMessage(jsonMessage) {
+            const error = jsonMessage.response.data.error;
+            errorMessage.innerText = error;
+        }
+
+        function processSubmit(e) {
+            e.preventDefault();
+
+            const category = {
+                title: document.getElementById("title").value,
+                priority: document.getElementById("priority").value,
+                urlSlug: document.getElementById("urlSlug").value,
+                image: document.getElementById("formPhoto").src
+            };
+
+            axios.post("https://goose.itstep.click/api/Categories/add", category, {
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(response => { location.href = "/pages/adminPages/categoriesEdit.html"; })
+                .catch(error => { showMessage(error); });
+        }
+
+        categoryForm.onsubmit = processSubmit;
+    </script>
 
 </body>
 </html>
