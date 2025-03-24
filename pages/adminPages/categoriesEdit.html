@@ -21,6 +21,7 @@
                         <th class="py-3 px-4 text-left">Priority</th>
                         <th class="py-3 px-4 text-left">Slug</th>
                         <th class="py-3 px-4 text-left">Image</th>
+                        <th class="py-3 px-4 text-left">Action</th>
                     </tr>
                 </thead>
                 <tbody id="categoriesTableBody">
@@ -33,6 +34,28 @@
     </div>
 
     <script>
+        function deleteCategory(e) {
+            const categoryId = e.target.dataset.id;
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                console.error("Auth token is missing");
+                return;
+            }
+
+            axios.delete(`https://goose.itstep.click/api/Categories/delete/${categoryId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(() => {
+                    fetchCategories();
+                })
+                .catch((error) => {
+                    console.error("Error deleting category:", error);
+                });
+        }
+
         async function fetchCategories() {
             try {
                 const response = await axios.get('https://goose.itstep.click/api/Categories/list');
@@ -41,17 +64,18 @@
 
                 tableBody.innerHTML = '';
 
-                categories.forEach((category, index) => {
+                categories.forEach((category) => {
                     const row = document.createElement('tr');
                     row.className = "border-b hover:bg-gray-100";
                     row.innerHTML = `
-                            <td class="py-3 px-4">${index + 1}</td>
-                            <td class="py-3 px-4">${category.title}</td>
-                            <td class="py-3 px-4">${category.priority}</td>
-                            <td class="py-3 px-4">${category.urlSlug}</td>
-                            <td class="py-3 px-4">
-                                <img src="https://goose.itstep.click/images/200_${category.image}" class="w-[100px] h-[100px] object-cover rounded-lg" alt="${category.title}">
-                            </td>
+                    <td class="py-3 px-4">
+                        <img src="https://goose.itstep.click/images/200_${category.image}" class="w-[100px] h-[100px] object-cover rounded-lg" alt="${category.title}">
+                    </td>
+                    <td class="py-3 px-4">${category.id}</td>
+                    <td class="py-3 px-4">${category.title}</td>
+                    <td class="py-3 px-4">${category.priority}</td>
+                    <td class="py-3 px-4">${category.urlSlug}</td>
+                    <td class="py-3 px-4 cursor-pointer text-[#c70000]" data-id="${category.id}" onclick="deleteCategory(event)">Delete</td>
                         `;
                     tableBody.appendChild(row);
                 });

@@ -6,7 +6,6 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Підключаємо speakingurl через CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/speakingurl/13.0.0/speakingurl.min.js"></script>
 
     <script src="/js/loader.js"></script>
@@ -39,6 +38,15 @@
                     Save Category
                 </button>
             </form>
+
+            <div id="progressContainer" class="hidden">
+                <p class="mt-2 text-sm mb-2 text-[#0db865]">Addition...</p>
+
+                <div class="w-full bg-gray-200 rounded-lg h-2 mt-2">
+                    <div id="progressBar" class="h-2 bg-[#0db865] rounded-lg" style="width: 0%;"></div>
+                </div>
+            </div>
+            
         </div>
     </div>
 
@@ -69,6 +77,8 @@
     <script>
         const categoryForm = document.getElementById("categoryForm");
         const errorMessage = document.getElementById("errorMessage");
+        const progressBar = document.getElementById("progressBar");
+        const progressContainer = document.getElementById("progressContainer");
 
         function generateSlug() {
             const title = document.getElementById("title").value;
@@ -78,6 +88,19 @@
         function showMessage(jsonMessage) {
             const error = jsonMessage.response.data.error;
             errorMessage.innerText = error;
+        }
+
+        function startProgressBar() {
+            progressContainer.classList.remove("hidden");
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                if (progress >= 95) {
+                    clearInterval(interval);
+                }
+                progressBar.style.width = progress + "%";
+            }, 200);
+            return interval;
         }
 
         function processSubmit(e) {
@@ -90,11 +113,24 @@
                 image: document.getElementById("formPhoto").src
             };
 
+            const progressInterval = startProgressBar();
+
             axios.post("https://goose.itstep.click/api/Categories/add", category, {
                 headers: { "Content-Type": "application/json" }
             })
-                .then(response => { location.href = "/pages/adminPages/categoriesEdit.html"; })
-                .catch(error => { showMessage(error); });
+                .then(response => {
+                    clearInterval(progressInterval);
+                    progressBar.style.width = "100%";
+                    setTimeout(() => {
+                        location.href = "/pages/adminPages/categoriesEdit.html";
+                    }, 300);
+                })
+                .catch(error => {
+                    clearInterval(progressInterval);
+                    progressBar.style.width = "0%";
+                    progressContainer.classList.add("hidden");
+                    showMessage(error);
+                });
         }
 
         categoryForm.onsubmit = processSubmit;
