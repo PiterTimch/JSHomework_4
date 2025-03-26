@@ -6,7 +6,7 @@
                     Dashboard
                 </button>
                 <ul id="dashboardDropdown" class="hidden pl-4 space-y-1">
-                    <li><a href="/pages/adminPages/dashboard.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Analytics</a></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/dashboard.html')" class="block p-2 hover:bg-gray-600">Analytics</button></li>
                 </ul>
             </li>
             <li>
@@ -14,8 +14,8 @@
                     Categories
                 </button>
                 <ul id="categoriesDropdown" class="hidden pl-4 space-y-1">
-                    <li><a href="/pages/adminPages/categoriesCreate.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Add</a></li>
-                    <li><a href="/pages/adminPages/categoriesEdit.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Edit</a></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/categoriesCreate.html')" class="block p-2 hover:bg-gray-600">Create</button></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/categoriesEdit.html')" class="block p-2 hover:bg-gray-600">Edit</button></li>
                 </ul>
             </li>
             <li>
@@ -23,8 +23,8 @@
                     Posts
                 </button>
                 <ul id="postsDropdown" class="hidden pl-4 space-y-1">
-                    <li><a href="/pages/adminPages/blogsCreate.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Create</a></li>
-                    <li><a href="/pages/adminPages/underDevelopment.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Edit</a></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/blogsCreate.html')" class="block p-2 hover:bg-gray-600">Create</button></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/underDevelopment.html')" class="block p-2 hover:bg-gray-600">Edit</button></li>
                 </ul>
             </li>
             <li>
@@ -32,7 +32,7 @@
                     Feedbacks
                 </button>
                 <ul id="feedbacksDropdown" class="hidden pl-4 space-y-1">
-                    <li><a href="/pages/adminPages/feedbacksCreate.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Write</a></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/feedbacksCreate.html')" class="block p-2 hover:bg-gray-600">Write</button></li>
                 </ul>
             </li>
             <li>
@@ -40,20 +40,40 @@
                     Products
                 </button>
                 <ul id="productsDropdown" class="hidden pl-4 space-y-1">
-                    <li><a href="/pages/adminPages/productCreate.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Create</a></li>
-                    <li><a href="/pages/adminPages/underDevelopment.html" target="contentFrame" class="block p-2 hover:bg-gray-600">Edit</a></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/productCreate.html')" class="block p-2 hover:bg-gray-600">Create</button></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/underDevelopment.html')" class="block p-2 hover:bg-gray-600">Edit</button></li>
                 </ul>
             </li>
         </ul>
     </nav>
 
-    <div class="col-span-5 p-4">
-        <iframe name="contentFrame" class="w-full h-full border rounded-lg" src="/pages/adminPages/dashboard.html"></iframe>
-    </div>
+    <div class="col-span-5 p-4" id="contentFrame"></div>
 </div>
 
+<script src="/js/loader.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js" integrity="sha512-6yLIYbXqyvjSDYNO1pgBRjwWPBw66kMOb+sHqrvn457+iJiret0PeHzUlpLKHH0fYzX9bxGtPDqQ84xKrhEYSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script src="/js/adminPanelScripts/categoriesEdit.js"></script>
+
 <script>
+    const contentFrame = document.getElementById('contentFrame');
+
     function toggleDropdown(id) {
         document.getElementById(id).classList.toggle("hidden");
+    }
+
+    function loadToContentFrame(url) {
+        contentFrame.innerHTML = getDOM(url);
+
+        if (url.includes('categoriesEdit.html')) {
+            fetchCategories();
+        }
+    }
+
+    window.onload = () => {
+        loadToContentFrame('/pages/adminPages/dashboard.html');
     }
 </script>

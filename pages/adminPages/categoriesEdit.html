@@ -1,138 +1,33 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body class="bg-gray-100 p-6">
+﻿<div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Categories</h2>
 
-    <div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Categories</h2>
-
-        <div class="flex justify-center my-4">
-            <input type="text" id="searchInput" placeholder="Search..." class="p-2 border rounded-l-lg w-64 focus:ring-2 focus:ring-[#0db865]">
-            <button onclick="search()" class="px-4 py-2 bg-[#0db865] text-white rounded-r-lg hover:bg-[#0aa650]">Search</button>
-        </div>
-
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
-                <thead class="bg-[#0db865] text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left">Image</th>
-                        <th class="py-3 px-4 text-left">#</th>
-                        <th class="py-3 px-4 text-left">Title</th>
-                        <th class="py-3 px-4 text-left">Priority</th>
-                        <th class="py-3 px-4 text-left">Slug</th>
-                        <th class="py-3 px-4 text-left">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="categoriesTableBody">
-                    <tr>
-                        <td colspan="5" class="text-center py-4">Loading...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <nav class="flex justify-center mt-4 space-x-2" id="paginationControls">
-            <!--<button class="px-4 py-2 border rounded-lg bg-gray-200">1</button>
-            <button class="px-4 py-2 border rounded-lg bg-gray-200">2</button>
-            <button class="px-4 py-2 border rounded-lg bg-gray-200">3</button>-->
-        </nav>
+    <div class="flex justify-center my-4">
+        <input type="text" id="searchInput" placeholder="Search..." class="p-2 border rounded-l-lg w-64 focus:ring-2 focus:ring-[#0db865]">
+        <button onclick="searchCategories()" class="px-4 py-2 bg-[#0db865] text-white rounded-r-lg hover:bg-[#0aa650]">Search</button>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js" integrity="sha512-6yLIYbXqyvjSDYNO1pgBRjwWPBw66kMOb+sHqrvn457+iJiret0PeHzUlpLKHH0fYzX9bxGtPDqQ84xKrhEYSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script>
-        let searchParams = {
-            page: 1,
-            title: '',
-        };
-
-        function search() {
-            searchParams.title = document.getElementById('searchInput').value;
-            fetchCategories();
-        }
-
-        function deleteCategory(e) {
-            const categoryId = e.target.dataset.id;
-            const token = localStorage.getItem("token");
-
-            if (!token) {
-                console.error("Auth token is missing");
-                return;
-            }
-
-            axios.delete(`https://goose.itstep.click/api/Categories/delete/${categoryId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-                .then(() => {
-                    fetchCategories();
-                })
-                .catch((error) => {
-                    console.error("Error deleting category:", error);
-                });
-        }
-
-        function onClick(e) {
-            searchParams.page = e.target.innerText;
-            fetchCategories();
-        }
-
-        async function fetchCategories() {
-            try {
-                const paginationControls = document.getElementById('paginationControls');
-
-                const response = await axios.get(`https://goose.itstep.click/api/Categories/search?${Qs.stringify(searchParams)}`);
-
-                console.log('Categories:', response);
-
-                const { data } = response;
-                const { categories, pages, currentPage } = data;
-                const tableBody = document.getElementById('categoriesTableBody');
-
-                paginationControls.innerHTML = '';
-
-                for (var i = 0; i < pages; i++) {
-                    if (i + 1 == currentPage) {
-                        paginationControls.innerHTML += `<button onclick="onClick(event)" class="px-4 py-2 border rounded-lg text-[#fff] bg-gray-800">${i + 1}</button>`;
-                    }
-                    else {
-                        paginationControls.innerHTML += `<button onclick="onClick(event)" class="px-4 py-2 border rounded-lg bg-gray-200">${i + 1}</button>`;
-                    }
-                }
-
-                tableBody.innerHTML = '';
-
-                categories.forEach((category) => {
-                    const row = document.createElement('tr');
-                    row.className = "border-b hover:bg-gray-100";
-                    row.innerHTML = `
-                    <td class="py-3 px-4">
-                        <img src="https://goose.itstep.click/images/200_${category.image}" class="w-[100px] h-[100px] object-cover rounded-lg" alt="${category.title}">
-                    </td>
-                    <td class="py-3 px-4">${category.id}</td>
-                    <td class="py-3 px-4">${category.title}</td>
-                    <td class="py-3 px-4">${category.priority}</td>
-                    <td class="py-3 px-4">${category.urlSlug}</td>
-                    <td class="py-3 px-4 cursor-pointer text-[#c70000]" data-id="${category.id}" onclick="deleteCategory(event)">Delete</td>
-                        `;
-                    tableBody.appendChild(row);
-                });
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-                document.getElementById('categoriesTableBody').innerHTML = `
-                        <tr><td colspan="5" class="text-center py-4 text-red-500">Failed to load categories</td></tr>
-                    `;
-            }
-        }
-
-        fetchCategories();
-    </script>
-
-</body>
-</html>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+            <thead class="bg-[#0db865] text-white">
+                <tr>
+                    <th class="py-3 px-4 text-left">Image</th>
+                    <th class="py-3 px-4 text-left">#</th>
+                    <th class="py-3 px-4 text-left">Title</th>
+                    <th class="py-3 px-4 text-left">Priority</th>
+                    <th class="py-3 px-4 text-left">Slug</th>
+                    <th class="py-3 px-4 text-left">Action</th>
+                </tr>
+            </thead>
+            <tbody id="categoriesTableBody">
+                <tr>
+                    <td colspan="5" class="text-center py-4">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav class="flex justify-center mt-4 space-x-2" id="paginationControls">
+        <!--<button class="px-4 py-2 border rounded-lg bg-gray-200">1</button>
+        <button class="px-4 py-2 border rounded-lg bg-gray-200">2</button>
+        <button class="px-4 py-2 border rounded-lg bg-gray-200">3</button>-->
+    </nav>
+</div>

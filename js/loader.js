@@ -11,6 +11,13 @@
     }
 };
 
+const getDOM = (path) => {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", path, false);
+    xhr.send();
+    return xhr.response;
+};
+
 function toggleUserMenu() {
     const token = localStorage.getItem("token");
     const anonimMenu = document.getElementById("anonimMenu");
