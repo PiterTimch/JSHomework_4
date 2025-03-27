@@ -21,10 +21,20 @@ async function deleteCategory(event) {
 
 
 function searchCategories() {
-    searchParams.title = document.getElementById('searchInput').value;
+    const searchTitle = document.getElementById('searchInput').value;
+    
+    searchParams.title = searchTitle;
+    searchParams.page = 1;
 
-    const newUrl = `${window.location.pathname}?${Qs.stringify(searchParams)}`;
-    window.history.pushState({}, '', newUrl);
+    if (searchTitle == "") {
+        const newUrl = `${window.location.pathname}`;
+        window.history.pushState({}, '', newUrl);
+    }
+    else {
+        const newUrl = `${window.location.pathname}?${Qs.stringify(searchParams)}`;
+        window.history.pushState({}, '', newUrl);
+    }
+    
 
     fetchCategories();
 }
