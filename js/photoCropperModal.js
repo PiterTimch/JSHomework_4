@@ -1,4 +1,4 @@
-﻿const formPhoto = document.getElementById("formPhoto");
+﻿let formPhoto = document.getElementById("formPhoto");
 
 const modal = document.getElementById("fileModal");
 const closeModal = document.getElementById("closeModal");
@@ -66,6 +66,8 @@ function closeModalWindow() {
 }
 
 function saveImage() {
+    formPhoto = document.getElementById("formPhoto");
+
     formPhoto.src = cropper.getCroppedCanvas().toDataURL();
     formPhoto.classList.remove("hidden");
     formPhoto.classList.add("h-[200px]");

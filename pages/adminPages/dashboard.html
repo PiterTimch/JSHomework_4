@@ -1,8 +1,4 @@
-﻿<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-
-<div class="max-w-6xl mx-auto">
+﻿<div class="max-w-6xl mx-auto">
     <h1 class="text-3xl font-bold text-center mb-6">Admin mode: ON. If it’s broken, it’s now your problem.</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -43,34 +39,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    lucide.createIcons();
-
-    const salesCtx = document.getElementById('salesChart').getContext('2d');
-    new Chart(salesCtx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Sales',
-                data: [1200, 1500, 1100, 1800, 1700, 2000],
-                borderColor: '#0db865',
-                fill: false,
-            }]
-        }
-    });
-
-    const usersCtx = document.getElementById('usersChart').getContext('2d');
-    new Chart(usersCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Users',
-                data: [300, 450, 500, 600, 700, 850],
-                backgroundColor: '#3b82f6'
-            }]
-        }
-    });
-</script>

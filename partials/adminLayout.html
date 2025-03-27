@@ -2,46 +2,46 @@
     <nav class="bg-[#45755e] text-white p-4 col-span-1 min-h-screen">
         <ul class="space-y-2">
             <li>
-                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('dashboardDropdown')">
+                <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('dashboardDropdown')">
                     Dashboard
                 </button>
-                <ul id="dashboardDropdown" class="hidden pl-4 space-y-1">
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/dashboard.html')" class="block p-2 hover:bg-gray-600">Analytics</button></li>
+                <ul id="dashboardDropdown" class="hidden pl-4">
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/dashboard.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Analytics</button></li>
                 </ul>
             </li>
             <li>
-                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('categoriesDropdown')">
+                <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('categoriesDropdown')">
                     Categories
                 </button>
-                <ul id="categoriesDropdown" class="hidden pl-4 space-y-1">
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/categoriesCreate.html')" class="block p-2 hover:bg-gray-600">Create</button></li>
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/categoriesEdit.html')" class="block p-2 hover:bg-gray-600">Edit</button></li>
+                <ul id="categoriesDropdown" class="hidden pl-4">
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/categoriesCreate.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Create</button></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/categoriesEdit.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Edit</button></li>
                 </ul>
             </li>
             <li>
-                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('postsDropdown')">
+                <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('postsDropdown')">
                     Posts
                 </button>
-                <ul id="postsDropdown" class="hidden pl-4 space-y-1">
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/blogsCreate.html')" class="block p-2 hover:bg-gray-600">Create</button></li>
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/underDevelopment.html')" class="block p-2 hover:bg-gray-600">Edit</button></li>
+                <ul id="postsDropdown" class="hidden pl-4">
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/blogsCreate.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Create</button></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/underDevelopment.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Edit</button></li>
                 </ul>
             </li>
             <li>
-                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('feedbacksDropdown')">
+                <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('feedbacksDropdown')">
                     Feedbacks
                 </button>
-                <ul id="feedbacksDropdown" class="hidden pl-4 space-y-1">
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/feedbacksCreate.html')" class="block p-2 hover:bg-gray-600">Write</button></li>
+                <ul id="feedbacksDropdown" class="hidden pl-4">
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/feedbacksCreate.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Write</button></li>
                 </ul>
             </li>
             <li>
-                <button class="w-full text-left p-2 hover:bg-gray-700" onclick="toggleDropdown('productsDropdown')">
+                <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('productsDropdown')">
                     Products
                 </button>
-                <ul id="productsDropdown" class="hidden pl-4 space-y-1">
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/productCreate.html')" class="block p-2 hover:bg-gray-600">Create</button></li>
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/underDevelopment.html')" class="block p-2 hover:bg-gray-600">Edit</button></li>
+                <ul id="productsDropdown" class="hidden pl-4">
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/productCreate.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Create</button></li>
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/underDevelopment.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Edit</button></li>
                 </ul>
             </li>
         </ul>
@@ -52,11 +52,21 @@
 
 <script src="/js/loader.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js" integrity="sha512-6yLIYbXqyvjSDYNO1pgBRjwWPBw66kMOb+sHqrvn457+iJiret0PeHzUlpLKHH0fYzX9bxGtPDqQ84xKrhEYSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/speakingurl/13.0.0/speakingurl.min.js"></script>
+
 <script src="/js/adminPanelScripts/categoriesEdit.js"></script>
+
+<script src="/js/adminPanelScripts/categoriesCreate.js"></script>
+
+<script src="/js/adminPanelScripts/dashboard.js"></script>
 
 <script>
     const contentFrame = document.getElementById('contentFrame');
@@ -70,6 +80,10 @@
 
         if (url.includes('categoriesEdit.html')) {
             fetchCategories();
+        }
+
+        if (url.includes('dashboard.html')) {
+            loadDash();
         }
     }
 
