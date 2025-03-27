@@ -1,5 +1,5 @@
 ﻿let searchParams = {
-    page: 1,
+    page: new URLSearchParams(window.location.search).get('page') || 1,
     title: new URLSearchParams(window.location.search).get('title') || '',
 };
 
@@ -8,7 +8,6 @@ document.getElementById('searchInput').value = searchParams.title;
 async function deleteCategory(event) {
     const categoryId = event.target.getAttribute('data-id');
     if (!categoryId) return;
-
 
     try {
         await axios.delete(`https://goose.itstep.click/api/Categories/delete/${categoryId}`);
@@ -19,28 +18,27 @@ async function deleteCategory(event) {
     }
 }
 
-
 function searchCategories() {
     const searchTitle = document.getElementById('searchInput').value;
-    
     searchParams.title = searchTitle;
     searchParams.page = 1;
 
-    if (searchTitle == "") {
-        const newUrl = `${window.location.pathname}`;
-        window.history.pushState({}, '', newUrl);
+    if (!searchParams.title) {
+        delete searchParams.title;
     }
-    else {
-        const newUrl = `${window.location.pathname}?${Qs.stringify(searchParams)}`;
-        window.history.pushState({}, '', newUrl);
-    }
-    
+
+    const newUrl = `${window.location.pathname}?${Qs.stringify(searchParams)}`;
+    window.history.pushState({}, '', newUrl);
 
     fetchCategories();
 }
 
 function onClickCategoriesPages(e) {
     searchParams.page = e.target.innerText;
+
+    if (!searchParams.title) {
+        delete searchParams.title;
+    }
 
     const newUrl = `${window.location.pathname}?${Qs.stringify(searchParams)}`;
     window.history.pushState({}, '', newUrl);
