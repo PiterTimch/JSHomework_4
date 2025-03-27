@@ -85,9 +85,18 @@
         if (url.includes('dashboard.html')) {
             loadDash();
         }
+
+        if (url.includes('categoriesCreate.html')) {
+            loadCategoryCreateForm();
+        }
     }
 
     window.onload = () => {
-        loadToContentFrame('/pages/adminPages/dashboard.html');
+        if (location.href.includes("?")) {
+            loadToContentFrame("/pages/adminPages/categoriesEdit.html");
+        }
+        else {
+            loadToContentFrame('/pages/adminPages/dashboard.html');
+        }
     }
 </script>

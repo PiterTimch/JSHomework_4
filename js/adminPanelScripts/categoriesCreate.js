@@ -1,9 +1,7 @@
-﻿loadDOM("/partials/photoCropperModal.html");
-
-const categoryForm = document.getElementById("categoryForm");
-const errorMessage = document.getElementById("errorMessage");
-const progressBar = document.getElementById("progressBar");
-const progressContainer = document.getElementById("progressContainer");
+﻿let categoryForm;
+let errorMessage;
+let progressBar;
+let progressContainer;
 
 function generateSlug() {
     const title = document.getElementById("title").value;
@@ -47,7 +45,7 @@ function processSubmit(e) {
             clearInterval(progressInterval);
             progressBar.style.width = "100%";
             setTimeout(() => {
-                location.href = "/pages/adminPages/categoriesEdit.html";
+                loadToContentFrame("/pages/adminPages/categoriesEdit.html");
             }, 300);
         })
         .catch(error => {
@@ -58,4 +56,14 @@ function processSubmit(e) {
         });
 }
 
-categoryForm.onsubmit = processSubmit;
+function loadCategoryCreateForm() {
+    categoryForm = document.getElementById("categoryForm");
+    errorMessage = document.getElementById("errorMessage");
+    progressBar = document.getElementById("progressBar");
+    progressContainer = document.getElementById("progressContainer");
+
+    categoryForm.onsubmit = processSubmit;
+}
+
+
+loadDOM("/partials/photoCropperModal.html");

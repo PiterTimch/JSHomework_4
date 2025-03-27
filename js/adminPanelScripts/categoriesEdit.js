@@ -3,13 +3,26 @@
     title: new URLSearchParams(window.location.search).get('title') || '',
 };
 
-// Оновлюємо поле пошуку при завантаженні
 document.getElementById('searchInput').value = searchParams.title;
+
+async function deleteCategory(event) {
+    const categoryId = event.target.getAttribute('data-id');
+    if (!categoryId) return;
+
+
+    try {
+        await axios.delete(`https://goose.itstep.click/api/Categories/delete/${categoryId}`);
+
+        fetchCategories();
+    } catch (error) {
+        console.error('Error deleting category:', error);
+    }
+}
+
 
 function searchCategories() {
     searchParams.title = document.getElementById('searchInput').value;
 
-    // Оновлюємо URL без перезавантаження
     const newUrl = `${window.location.pathname}?${Qs.stringify(searchParams)}`;
     window.history.pushState({}, '', newUrl);
 
@@ -19,11 +32,15 @@ function searchCategories() {
 function onClickCategoriesPages(e) {
     searchParams.page = e.target.innerText;
 
-    // Оновлюємо URL з новою сторінкою
     const newUrl = `${window.location.pathname}?${Qs.stringify(searchParams)}`;
     window.history.pushState({}, '', newUrl);
 
     fetchCategories();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 async function fetchCategories() {
@@ -73,6 +90,3 @@ async function fetchCategories() {
         `;
     }
 }
-
-// При першому завантаженні враховуємо параметри з URL
-fetchCategories();
