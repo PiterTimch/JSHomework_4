@@ -71,8 +71,7 @@ async function processSubmitEdit(e) {
             clearInterval(progressInterval);
             progressBarEdit.style.width = "100%";
             setTimeout(() => {
-                location.href = "/pages/adminPanel.html";
-                loadToContentFrame("/pages/adminPages/categoriesView.html");
+                location.href = "/pages/adminPanel.html?page=1";
             }, 300);
         })
         .catch(error => {
