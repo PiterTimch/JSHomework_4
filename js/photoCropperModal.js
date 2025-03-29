@@ -66,7 +66,7 @@ function closeModalWindow() {
 }
 
 function saveImage() {
-    formPhoto = document.getElementById("formPhoto");
+    formPhoto = document.getElementById("formPhoto") || document.getElementById("formPhotoEdit");
 
     formPhoto.src = cropper.getCroppedCanvas().toDataURL();
     formPhoto.classList.remove("hidden");

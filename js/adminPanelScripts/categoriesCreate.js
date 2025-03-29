@@ -65,5 +65,6 @@ function loadCategoryCreateForm() {
     categoryForm.onsubmit = processSubmit;
 }
 
-
-loadDOM("/partials/photoCropperModal.html");
+if (!document.getElementById("fileModal")) {
+    loadDOM("/partials/photoCropperModal.html");
+}

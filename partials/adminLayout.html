@@ -69,6 +69,8 @@
 
 <script src="/js/adminPanelScripts/dashboard.js"></script>
 
+<script src="/js/adminPanelScripts/categoriesEdit.js"></script>
+
 <script>
     const contentFrame = document.getElementById('contentFrame');
 
@@ -89,6 +91,10 @@
 
         if (url.includes('categoriesCreate.html')) {
             loadCategoryCreateForm();
+        }
+
+        if (url.includes('categoriesEdit.html')) {
+            loadCategoryEditForm();
         }
     }
 
