@@ -100,7 +100,12 @@
 
     window.onload = () => {
         if (location.href.includes("?")) {
-            loadToContentFrame("/pages/adminPages/categoriesView.html");
+            if (location.href.includes("categoryId")) {
+                loadToContentFrame("/pages/adminPages/categoriesEdit.html");
+            }
+            else {
+                loadToContentFrame("/pages/adminPages/categoriesView.html");
+            }
         }
         else {
             loadToContentFrame('/pages/adminPages/dashboard.html');
