@@ -14,8 +14,9 @@
                     Categories
                 </button>
                 <ul id="categoriesDropdown" class="hidden pl-4">
+
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/categoriesView.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">View</button></li>
                     <li><button onclick="loadToContentFrame('/pages/adminPages/categoriesCreate.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Create</button></li>
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/categoriesEdit.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Edit</button></li>
                 </ul>
             </li>
             <li>
@@ -62,7 +63,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/speakingurl/13.0.0/speakingurl.min.js"></script>
 
-<script src="/js/adminPanelScripts/categoriesEdit.js"></script>
+<script src="/js/adminPanelScripts/categoriesView.js"></script>
 
 <script src="/js/adminPanelScripts/categoriesCreate.js"></script>
 
@@ -78,7 +79,7 @@
     function loadToContentFrame(url) {
         contentFrame.innerHTML = getDOM(url);
 
-        if (url.includes('categoriesEdit.html')) {
+        if (url.includes('categoriesView.html')) {
             fetchCategories();
         }
 
@@ -93,7 +94,7 @@
 
     window.onload = () => {
         if (location.href.includes("?")) {
-            loadToContentFrame("/pages/adminPages/categoriesEdit.html");
+            loadToContentFrame("/pages/adminPages/categoriesView.html");
         }
         else {
             loadToContentFrame('/pages/adminPages/dashboard.html');

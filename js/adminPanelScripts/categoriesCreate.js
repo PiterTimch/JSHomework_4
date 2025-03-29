@@ -45,7 +45,7 @@ function processSubmit(e) {
             clearInterval(progressInterval);
             progressBar.style.width = "100%";
             setTimeout(() => {
-                loadToContentFrame("/pages/adminPages/categoriesEdit.html");
+                loadToContentFrame("/pages/adminPages/categoriesView.html");
             }, 300);
         })
         .catch(error => {
