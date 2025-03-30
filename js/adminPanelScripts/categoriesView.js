@@ -6,15 +6,25 @@
 let searchCategoriesForm;
 
 async function deleteCategory(event) {
-    const categoryId = event.target.getAttribute('data-id');
-    if (!categoryId) return;
+    const category =
+    {
+        id: event.target.getAttribute('data-id'),
+        title: event.target.getAttribute('data-title')
+    };
 
-    try {
-        await axios.delete(`https://goose.itstep.click/api/Categories/delete/${categoryId}`);
-        fetchCategories();
-    } catch (error) {
-        console.error('Error deleting category:', error);
-    }
+    if (!category.id) return;
+
+    openDeleteModal(category.title);
+
+    document.getElementById('deleteCategoryBtn').onclick = async () => {
+        try {
+            await axios.delete(`https://goose.itstep.click/api/Categories/delete/${category.id}`);
+            closeDeleteModal();
+            fetchCategories();
+        } catch (error) {
+            console.error('Error deleting category:', error);
+        }
+    };
 }
 
 function editCategory(event) {
@@ -101,7 +111,7 @@ async function fetchCategories() {
                 <td class="py-3 px-4">${category.priority}</td>
                 <td class="py-3 px-4">${category.urlSlug}</td>
                 <td class="py-3 px-4 cursor-pointer text-blue-600" data-id="${category.id}" onclick="editCategory(event)">Edit</td>
-                <td class="py-3 px-4 cursor-pointer text-[#c70000]" data-id="${category.id}" onclick="deleteCategory(event)">Delete</td>
+                <td class="py-3 px-4 cursor-pointer text-[#c70000]" data-id="${category.id}" data-title="${category.title}" onclick="deleteCategory(event)">Delete</td>
             `;
             tableBody.appendChild(row);
         });
