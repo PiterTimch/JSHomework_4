@@ -41,8 +41,8 @@
                     Products
                 </button>
                 <ul id="productsDropdown" class="hidden pl-4">
+                    <li><button onclick="loadToContentFrame('/pages/adminPages/productsView.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">View</button></li>
                     <li><button onclick="loadToContentFrame('/pages/adminPages/productCreate.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Create</button></li>
-                    <li><button onclick="loadToContentFrame('/pages/adminPages/underDevelopment.html')" class="w-full text-left p-3 hover:bg-gray-600 transition duration-200">Edit</button></li>
                 </ul>
             </li>
         </ul>
@@ -82,6 +82,8 @@
 
 <script src="/js/adminPanelScripts/productsCreate.js"></script>
 
+<script src="/js/adminPanelScripts/productsView.js"></script>
+
 <script>
     const contentFrame = document.getElementById('contentFrame');
 
@@ -110,6 +112,10 @@
 
         if (url.includes('productCreate.html')) {
             loadCreateProductForm();
+        }
+
+        if (url.includes('productsView.html')) {
+            fetchProducts();
         }
     }
 

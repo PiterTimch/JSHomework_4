@@ -1,0 +1,33 @@
+﻿<div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Products</h2>
+    <form id="searchProductsForm">
+        <div class="flex justify-center my-4">
+            <input type="text" id="searchInput" placeholder="Search..." class="p-2 border rounded-l-lg w-64 focus:ring-2 focus:ring-[#0db865]">
+            <button type="submit" onclick="searchProduct()" class="px-4 py-2 bg-[#0db865] text-white rounded-r-lg hover:bg-[#0aa650]">Search</button>
+        </div>
+    </form>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+            <thead class="bg-[#0db865] text-white">
+                <tr>
+                    <th class="py-3 px-4 text-left">Image</th>
+                    <th class="py-3 px-4 text-left">#</th>
+                    <th class="py-3 px-4 text-left">Title</th>
+                    <th class="py-3 px-4 text-left">Category</th>
+                    <th class="py-3 px-4 text-left">Priority</th>
+                    <th class="py-3 px-4 text-left">Price</th>
+                    <th class="py-3 px-4 text-left">Actions</th>
+                    <th class="py-3 px-4 text-left"></th>
+                </tr>
+            </thead>
+            <tbody id="productsTableBody">
+                <tr>
+                    <td colspan="7" class="text-center py-4">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav class="flex justify-center mt-4 space-x-2" id="paginationControls">
+    </nav>
+</div>
