@@ -7,6 +7,11 @@
                 <input id="title" type="text" placeholder="Enter product title" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
             </div>
 
+            <div class="col-span-2">
+                <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
+                <input id="priority" type="number" step="1" placeholder="Enter priority" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
+            </div>
+
             <div>
                 <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
                 <select id="category" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
@@ -30,6 +35,8 @@
             </div>
 
             <div id="imageList" class="col-span-2 grid grid-cols-4 gap-4 mt-4"></div>
+
+            <p id="productErrorMessage" class="text-sm mb-2 text-[#c70000]"></p>
 
             <div class="col-span-2">
                 <button type="submit" class="w-full bg-[#0db865] hover:bg-[#0aa650] text-white py-3 rounded-lg transition-all duration-300">
