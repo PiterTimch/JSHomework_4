@@ -53,7 +53,7 @@ function processRegistration(e) {
         confirmPassword: document.getElementById("confirmPassword").value
     };
 
-    axios.post(`${window.API_BASE_URL}/Account/register`, user, {
+    axios.post(`${window.API_BASE_URL}/api/Account/register`, user, {
         headers: {
             "Content-Type": "application/json"
         }
