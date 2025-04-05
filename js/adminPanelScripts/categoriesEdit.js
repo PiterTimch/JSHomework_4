@@ -50,7 +50,7 @@ async function processSubmitEdit(e) {
     const currentImageSrc = document.getElementById("formPhotoEdit").src;
     let imageData = currentImageSrc;
 
-    if (loadedCategory && currentImageSrc === `https://goose.itstep.click/images/200_${loadedCategory.image}`) {
+    if (loadedCategory && currentImageSrc === `${window.API_BASE_URL}/images/200_${loadedCategory.image}`) {
         imageData = await fetchImageAsBase64(currentImageSrc);
     }
 
@@ -64,7 +64,7 @@ async function processSubmitEdit(e) {
 
     const progressInterval = startProgressBarEdit();
 
-    axios.put("https://goose.itstep.click/api/Categories/edit", category, {
+    axios.put(`${window.API_BASE_URL}/api/Categories/edit`, category, {
         headers: { "Content-Type": "application/json" }
     })
         .then(response => {
@@ -83,14 +83,14 @@ async function processSubmitEdit(e) {
 }
 
 function loadUserToEditInputs() {
-    axios.get(`https://goose.itstep.click/api/Categories/get/${categoryId}`)
+    axios.get(`${window.API_BASE_URL}/api/Categories/get/${categoryId}`)
         .then(response => {
             loadedCategory = response.data;
             document.getElementById("titleEdit").value = loadedCategory.title;
             document.getElementById("priorityEdit").value = loadedCategory.priority;
             document.getElementById("urlSlugEdit").value = loadedCategory.urlSlug;
             document.getElementById("formPhotoEdit").classList.remove("hidden");
-            document.getElementById("formPhotoEdit").src = `https://goose.itstep.click/images/200_${loadedCategory.image}`;
+            document.getElementById("formPhotoEdit").src = `${window.API_BASE_URL}/images/200_${loadedCategory.image}`;
 
             document.getElementById("loadingScreen").classList.add("hidden");
         })

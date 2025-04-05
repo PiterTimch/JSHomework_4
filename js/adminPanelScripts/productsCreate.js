@@ -5,7 +5,7 @@ let productErrorMessage;
 
 async function loadCategories() {
     try {
-        const res = await axios.get("https://goose.itstep.click/api/Categories/list");
+        const res = await axios.get(`${window.API_BASE_URL}/api/Categories/list`);
         const { data } = res;
 
         const selectElement = document.getElementById('category');
@@ -46,7 +46,7 @@ async function uploadImage(file, imageList) {
         imageList.appendChild(placeholder);
 
         try {
-            const res = await axios.post("https://goose.itstep.click/api/Products/upload", {
+            const res = await axios.post(`${window.API_BASE_URL}/api/Products/upload`, {
                 image: e.target.result
             });
 
@@ -110,7 +110,7 @@ async function submitForm(event) {
     try {
         loadingOverlay.classList.remove("hidden");
 
-        const response = await axios.post("https://goose.itstep.click/api/Products/add", productData);
+        const response = await axios.post(`${window.API_BASE_URL}/api/Products/add`, productData);
 
         createProductForm.reset();
         tinymce.activeEditor.setContent("");

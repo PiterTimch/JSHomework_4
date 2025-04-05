@@ -7,7 +7,7 @@ const loading = document.getElementById("loading-overlay");
 function getUserDataFromServer() {
     const token = localStorage.getItem("token");
 
-    return axios.get("https://goose.itstep.click/api/Account/profile", {
+    return axios.get(`${window.API_BASE_URL}/api/Account/profile`, {
         headers: {
             "Authorization": `Bearer ${token}`,
             "Accept": "*/*"
@@ -26,7 +26,7 @@ function onloadProcess() {
         userName.innerText = `${user.firstName} ${user.secondName}`;
         userEmail.innerText = user.email;
         userPhone.innerText = user.phone;
-        userPhoto.src = `https://goose.itstep.click/images/800_${user.photo}`;
+        userPhoto.src = `${window.API_BASE_URL}/images/800_${user.photo}`;
 
         loading.classList.add("hidden");
     });

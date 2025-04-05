@@ -12,7 +12,7 @@
 async function fetchProducts() {
     try {
 
-        const response = await axios.get(`https://goose.itstep.click/api/Products/list`);
+        const response = await axios.get(`${window.API_BASE_URL}/api/Products/list`);
         console.log('Products:', response);
 
         const { data } = response;
@@ -34,7 +34,7 @@ async function fetchProducts() {
             row.className = "border-b hover:bg-gray-100";
             row.innerHTML = `
                 <td class="py-3 px-4">
-                    <img src="https://goose.itstep.click/images/200_${product.images[0]}" class="w-[50px] h-[50px] object-cover rounded-lg" alt="${product.name}">
+                    <img src="${window.API_BASE_URL}/images/200_${product.images[0]}" class="w-[50px] h-[50px] object-cover rounded-lg" alt="${product.name}">
                 </td>
                 <td class="py-3 px-4">${product.id}</td>
                 <td class="py-3 px-4">${product.name}</td>
@@ -65,7 +65,7 @@ document.getElementById("confirmDeleteBtn").addEventListener("click", async () =
     if (!productToDelete) return;
 
     try {
-        await axios.delete(`https://goose.itstep.click/api/Products/delete/${productToDelete}`);
+        await axios.delete(`${window.API_BASE_URL}/api/Products/delete/${productToDelete}`);
         closeModal();
         fetchProducts();
     } catch (error) {

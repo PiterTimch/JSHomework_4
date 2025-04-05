@@ -31,3 +31,5 @@ function toggleUserMenu() {
         loginMenu.classList.add("hidden");
     }
 }
+
+window.API_BASE_URL = "https://goose.itstep.click";

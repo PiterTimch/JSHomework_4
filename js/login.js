@@ -27,7 +27,7 @@ function processRegistration(e) {
         password: document.getElementById("password").value
     };
 
-    axios.post("https://goose.itstep.click/api/Account/login", loginData, {
+    axios.post(`${window.API_BASE_URL}/api/Account/login`, loginData, {
         headers: {
             "Content-Type": "application/json"
         }

@@ -38,7 +38,7 @@ function processSubmit(e) {
 
     const progressInterval = startProgressBar();
 
-    axios.post("https://goose.itstep.click/api/Categories/add", category, {
+    axios.post(`${window.API_BASE_URL}/api/Categories/add`, category, {
         headers: { "Content-Type": "application/json" }
     })
         .then(response => {

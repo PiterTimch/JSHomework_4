@@ -18,7 +18,7 @@ async function deleteCategory(event) {
 
     document.getElementById('deleteCategoryBtn').onclick = async () => {
         try {
-            await axios.delete(`https://goose.itstep.click/api/Categories/delete/${category.id}`);
+            await axios.delete(`${window.API_BASE_URL}/api/Categories/delete/${category.id}`);
             closeDeleteModal();
             fetchCategories();
         } catch (error) {
@@ -76,7 +76,7 @@ async function fetchCategories() {
             searchCategories();
         }
 
-        const response = await axios.get(`https://goose.itstep.click/api/Categories/search?${Qs.stringify(searchParams)}`);
+        const response = await axios.get(`${window.API_BASE_URL}/api/Categories/search?${Qs.stringify(searchParams)}`);
 
         console.log('Categories:', response);
 
@@ -101,7 +101,7 @@ async function fetchCategories() {
             row.className = "border-b hover:bg-gray-100";
             row.innerHTML = `
                 <td class="py-3 px-4">
-                    <img src="https://goose.itstep.click/images/200_${category.image}" 
+                    <img src="${window.API_BASE_URL}/images/200_${category.image}" 
                          class="w-[100px] h-[100px] object-cover rounded-lg" alt="${category.title}">
                 </td>
                 <td class="py-3 px-4">${category.id}</td>
