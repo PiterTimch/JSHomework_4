@@ -71,7 +71,7 @@ async function processSubmitEdit(e) {
             clearInterval(progressInterval);
             progressBarEdit.style.width = "100%";
             setTimeout(() => {
-                location.href = "/pages/adminPanel.html?page=1";
+                location.href = "/pages/adminPages/categoriesView";
             }, 300);
         })
         .catch(error => {
@@ -107,10 +107,14 @@ function loadCategoryEditForm() {
 
     categoryFormEdit.onsubmit = processSubmitEdit;
 
-    categoryId = new URLSearchParams(window.location.search).get('categoryId');
+    categoryId = localStorage.editCadegoryId;
 
     loadUserToEditInputs();
 }
+
+document.addEventListener(('DOMContentLoaded'), () => {
+    loadCategoryEditForm();
+});
 
 if (!document.getElementById("fileModal")) {
     loadDOM("/partials/photoCropperModal.html");

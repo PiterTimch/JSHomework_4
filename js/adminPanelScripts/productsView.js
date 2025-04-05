@@ -1,13 +1,7 @@
 ﻿async function fetchProducts() {
     try {
-        const paginationControls = document.getElementById('paginationControls');
-        searchProductsForm = document.getElementById('searchProductsForm');
-        searchProductsForm.onsubmit = (e) => {
-            e.preventDefault();
-            searchProducts();
-        };
 
-        const response = await axios.get(`https://goose.itstep.click/api/Products/list?${Qs.stringify(searchParams)}`);
+        const response = await axios.get(`https://goose.itstep.click/api/Products/list`);
         console.log('Products:', response);
 
         const { data } = response;
@@ -48,3 +42,7 @@
         `;
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchProducts();
+});

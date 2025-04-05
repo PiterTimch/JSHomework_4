@@ -1,33 +1,85 @@
-﻿<div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Categories</h2>
-    <form id="searchCategoriesForm">
-        <div class="flex justify-center my-4">
-            <input type="text" id="searchInput" placeholder="Search..." class="p-2 border rounded-l-lg w-64 focus:ring-2 focus:ring-[#0db865]">
-            <button type="submit" onclick="searchCategories()" class="px-4 py-2 bg-[#0db865] text-white rounded-r-lg hover:bg-[#0aa650]">Search</button>
-        </div>
-    </form>
-    
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Admin panel</title>
 
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
-            <thead class="bg-[#0db865] text-white">
-                <tr>
-                    <th class="py-3 px-4 text-left">Image</th>
-                    <th class="py-3 px-4 text-left">#</th>
-                    <th class="py-3 px-4 text-left">Title</th>
-                    <th class="py-3 px-4 text-left">Priority</th>
-                    <th class="py-3 px-4 text-left">Slug</th>
-                    <th class="py-3 px-4 text-left"></th>
-                    <th class="py-3 px-4 text-left"></th>
-                </tr>
-            </thead>
-            <tbody id="categoriesTableBody">
-                <tr>
-                    <td colspan="5" class="text-center py-4">Loading...</td>
-                </tr>
-            </tbody>
-        </table>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="/js/loader.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/axios.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/speakingurl/13.0.0/speakingurl.min.js"></script>
+</head>
+<body>
+    <script>loadDOM("/partials/loading.html")</script>
+    <div class="w-[85%] mx-auto">
+        <script>loadDOM("/partials/header.html")</script>
+        <div class="grid grid-cols-6 h-screen">
+            <script>loadDOM("/partials/navAdminPanel.html")</script>
+
+            <div class="col-span-5 p-4" id="contentFrame">
+                <div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Categories</h2>
+                    <form id="searchCategoriesForm">
+                        <div class="flex justify-center my-4">
+                            <input type="text" id="searchInput" placeholder="Search..." class="p-2 border rounded-l-lg w-64 focus:ring-2 focus:ring-[#0db865]">
+                            <button type="submit" onclick="searchCategories()" class="px-4 py-2 bg-[#0db865] text-white rounded-r-lg hover:bg-[#0aa650]">Search</button>
+                        </div>
+                    </form>
+
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+                            <thead class="bg-[#0db865] text-white">
+                                <tr>
+                                    <th class="py-3 px-4 text-left">Image</th>
+                                    <th class="py-3 px-4 text-left">#</th>
+                                    <th class="py-3 px-4 text-left">Title</th>
+                                    <th class="py-3 px-4 text-left">Priority</th>
+                                    <th class="py-3 px-4 text-left">Slug</th>
+                                    <th class="py-3 px-4 text-left"></th>
+                                    <th class="py-3 px-4 text-left"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesTableBody">
+                                <tr>
+                                    <td colspan="5" class="text-center py-4">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav class="flex justify-center mt-4 space-x-2" id="paginationControls">
+                    </nav>
+                </div>
+            </div>
+        </div>
     </div>
-    <nav class="flex justify-center mt-4 space-x-2" id="paginationControls">
-    </nav>
-</div>
+
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out;
+        }
+    </style>
+    <script>loadDOM("/partials/deleteCategoryModal.html")</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js" integrity="sha512-6yLIYbXqyvjSDYNO1pgBRjwWPBw66kMOb+sHqrvn457+iJiret0PeHzUlpLKHH0fYzX9bxGtPDqQ84xKrhEYSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="/js/adminPanelScripts/deleteCategoryModal.js"></script>
+
+    <script src="/js/adminPanelScripts/categoriesView.js"></script>
+</body>
+</html>

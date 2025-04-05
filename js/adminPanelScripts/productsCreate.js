@@ -151,3 +151,7 @@ async function loadCreateProductForm() {
     await loadCategories();
     loadImagesInputs();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadCreateProductForm();
+})

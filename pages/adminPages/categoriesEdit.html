@@ -1,76 +1,105 @@
-﻿<div id="loadingScreen" class="fixed inset-0 flex items-center justify-center bg-white z-50">
-    <div class="flex flex-col items-center">
-        <div class="w-12 h-12 border-4 border-[#0db865] border-t-transparent rounded-full animate-spin"></div>
-        <p class="mt-4 text-[#0db865] text-lg font-semibold">Loading...</p>
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Admin panel</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="/js/loader.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/axios.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/speakingurl/13.0.0/speakingurl.min.js"></script>
+</head>
+<body>
+    <div id="loadingScreen" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <div class="flex flex-col items-center">
+            <div class="w-12 h-12 border-4 border-[#0db865] border-t-transparent rounded-full animate-spin"></div>
+            <p class="mt-4 text-[#0db865] text-lg font-semibold">Loading...</p>
+        </div>
     </div>
-</div>
 
-<div class="flex items-center justify-center min-h-screen bg-white my-6">
-    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md animate-fade-in-up">
-        <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Category edit</h2>
-        <form class="grid grid-cols-1 gap-4" id="categoryEditForm">
-            <input type="text" id="titleEdit" placeholder="Title" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]" oninput="generateSlugEdit()">
+    <script>loadDOM("/partials/loading.html")</script>
+    <div class="w-[85%] mx-auto">
+        <script>loadDOM("/partials/header.html")</script>
+        <div class="grid grid-cols-6 h-screen">
+            <script>loadDOM("/partials/navAdminPanel.html")</script>
 
-            <input type="number" id="priorityEdit" placeholder="Priority" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
+            <div class="col-span-5 p-4" id="contentFrame">
+                <div class="flex items-center justify-center min-h-screen bg-white my-6">
+                    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md animate-fade-in-up">
+                        <h2 class="text-2xl font-bold text-center text-[#0db865] mb-6">Category edit</h2>
+                        <form class="grid grid-cols-1 gap-4" id="categoryEditForm">
+                            <input type="text" id="titleEdit" placeholder="Title" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]" oninput="generateSlugEdit()">
 
-            <input type="text" id="urlSlugEdit" placeholder="URL Slug" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
+                            <input type="number" id="priorityEdit" placeholder="Priority" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
 
-            <div class="m-0">
-                <label id="fileLabelEdit" class="block border-2 border-dashed border-[#0db865] rounded-xl p-6 text-center cursor-pointer relative">
-                    <input type="file" onchange="openModalWindow(event)" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" id="fileInput">
-                    <span class="text-gray-500">Перетягніть або виберіть фото</span>
-                </label>
-            </div>
+                            <input type="text" id="urlSlugEdit" placeholder="URL Slug" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865]">
 
-            <div class="flex items-center justify-center">
-                <img id="formPhotoEdit" class="rounded-lg hidden h-[200px] w-[200px] object-cover" />
-            </div>
+                            <div class="m-0">
+                                <label id="fileLabelEdit" class="block border-2 border-dashed border-[#0db865] rounded-xl p-6 text-center cursor-pointer relative">
+                                    <input type="file" onchange="openModalWindow(event)" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" id="fileInput">
+                                    <span class="text-gray-500">Перетягніть або виберіть фото</span>
+                                </label>
+                            </div>
 
-            <p id="errorMessageEdit" class="text-sm mb-2 text-[#c70000]"></p>
+                            <div class="flex items-center justify-center">
+                                <img id="formPhotoEdit" class="rounded-lg hidden h-[200px] w-[200px] object-cover" />
+                            </div>
 
-            <button type="submit" class="w-full bg-[#0db865] hover:bg-[#0aa650] text-white py-3 rounded-lg transition-all duration-300">
-                Edit Category
-            </button>
-        </form>
+                            <p id="errorMessageEdit" class="text-sm mb-2 text-[#c70000]"></p>
 
-        <div id="progressContainerEdit" class="hidden">
-            <p class="mt-2 text-sm mb-2 text-[#0db865]">Addition...</p>
+                            <button type="submit" class="w-full bg-[#0db865] hover:bg-[#0aa650] text-white py-3 rounded-lg transition-all duration-300">
+                                Edit Category
+                            </button>
+                        </form>
 
-            <div class="w-full bg-gray-200 rounded-lg h-2 mt-2">
-                <div id="progressBarEdit" class="h-2 bg-[#0db865] rounded-lg" style="width: 0%;"></div>
+                        <div id="progressContainerEdit" class="hidden">
+                            <p class="mt-2 text-sm mb-2 text-[#0db865]">Addition...</p>
+
+                            <div class="w-full bg-gray-200 rounded-lg h-2 mt-2">
+                                <div id="progressBarEdit" class="h-2 bg-[#0db865] rounded-lg" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<style>
-    @keyframes fade-in-up {
-        from {
-            opacity: 0;
-            transform: translateY(-50px);
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .animate-fade-in-up {
-        animation: fade-in-up 0.8s ease-out;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out;
         }
 
-        100% {
-            transform: rotate(360deg);
-        }
-    }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-    .animate-spin {
-        animation: spin 1s linear infinite;
-    }
-</style>
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+
+    <script src="/js/adminPanelScripts/categoriesEdit.js"></script>
+</body>
+</html>

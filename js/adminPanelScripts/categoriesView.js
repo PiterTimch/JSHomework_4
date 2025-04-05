@@ -28,11 +28,9 @@ async function deleteCategory(event) {
 }
 
 function editCategory(event) {
-    const newUrl = `${window.location.pathname}?${Qs.stringify({ categoryId: event.target.getAttribute('data-id') })}`;
+    localStorage.editCadegoryId = event.target.getAttribute('data-id');
 
-    window.history.pushState({}, '', newUrl);
-
-    loadToContentFrame("/pages/adminPages/categoriesEdit.html");
+    location.href = "/pages/adminPages/categoriesEdit.html";
 }
 
 function searchCategories() {
@@ -122,3 +120,7 @@ async function fetchCategories() {
         `;
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchCategories();
+});

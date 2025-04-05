@@ -1,0 +1,53 @@
+﻿<nav class="bg-[#45755e] text-white p-4 col-span-1 min-h-screen">
+    <ul class="space-y-2">
+        <li>
+            <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('dashboardDropdown')">
+                Dashboard
+            </button>
+            <ul id="dashboardDropdown" class="hidden pl-4">
+                <li><a href="/pages/adminPanel.html" class="block w-full text-left p-3 hover:bg-gray-600 transition duration-200">Analytics</a></li>
+            </ul>
+        </li>
+        <li>
+            <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('categoriesDropdown')">
+                Categories
+            </button>
+            <ul id="categoriesDropdown" class="hidden pl-4">
+                <li><a href="/pages/adminPages/categoriesView.html" class="block w-full text-left p-3 hover:bg-gray-600 transition duration-200">View</a></li>
+                <li><a href="/pages/adminPages/categoriesCreate.html" class="block w-full text-left p-3 hover:bg-gray-600 transition duration-200">Create</a></li>
+            </ul>
+        </li>
+        <li>
+            <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('postsDropdown')">
+                Posts
+            </button>
+            <ul id="postsDropdown" class="hidden pl-4">
+                <li><a href="/pages/adminPages/underDevelopment.html" class="block w-full text-left p-3 hover:bg-gray-600 transition duration-200">Create</a></li>
+                <li><a href="/pages/adminPages/underDevelopment.html" class="block w-full text-left p-3 hover:bg-gray-600 transition duration-200">Edit</a></li>
+            </ul>
+        </li>
+        <li>
+            <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('feedbacksDropdown')">
+                Feedbacks
+            </button>
+            <ul id="feedbacksDropdown" class="hidden pl-4">
+                <li><a href="/pages/adminPages/underDevelopment.html" class="block w-full text-left p-3 hover:bg-gray-600 transition duration-200">Write</a></li>
+            </ul>
+        </li>
+        <li>
+            <button class="w-full text-left p-3 hover:bg-gray-700 transition duration-200" onclick="toggleDropdown('productsDropdown')">
+                Products
+            </button>
+            <ul id="productsDropdown" class="hidden pl-4">
+                <li><a href="/pages/adminPages/productsView.html" class="block w-full text-left p-3 hover:bg-gray-600 transition duration-200">View</a></li>
+                <li><a href="/pages/adminPages/productCreate.html" class="block w-full text-left p-3 hover:bg-gray-600 transition duration-200">Create</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    function toggleDropdown(id) {
+        document.getElementById(id).classList.toggle("hidden");
+    }
+</script>

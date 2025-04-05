@@ -45,7 +45,7 @@ function processSubmit(e) {
             clearInterval(progressInterval);
             progressBar.style.width = "100%";
             setTimeout(() => {
-                loadToContentFrame("/pages/adminPages/categoriesView.html");
+                location.href = "/pages/adminPages/categoriesView.html";
             }, 300);
         })
         .catch(error => {
@@ -64,6 +64,10 @@ function loadCategoryCreateForm() {
 
     categoryForm.onsubmit = processSubmit;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadCategoryCreateForm();
+})
 
 if (!document.getElementById("fileModal")) {
     loadDOM("/partials/photoCropperModal.html");
