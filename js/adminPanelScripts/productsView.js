@@ -1,4 +1,15 @@
-﻿async function fetchProducts() {
+﻿function deleteProduct(event) {
+    const id = event.target.dataset.id;
+    const name = event.target.dataset.name;
+
+    productToDelete = id;
+
+    document.getElementById("modalProductName").innerText = name;
+
+    document.getElementById("deleteModal").classList.remove("hidden");
+}
+
+async function fetchProducts() {
     try {
 
         const response = await axios.get(`https://goose.itstep.click/api/Products/list`);
@@ -42,6 +53,27 @@
         `;
     }
 }
+
+let productToDelete;
+
+function closeModal() {
+    document.getElementById("deleteModal").classList.add("hidden");
+    productToDelete = null;
+}
+
+document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
+    if (!productToDelete) return;
+
+    try {
+        await axios.delete(`https://goose.itstep.click/api/Products/delete/${productToDelete}`);
+        closeModal();
+        fetchProducts();
+    } catch (error) {
+        console.error("Failed to delete product", error);
+    }
+});
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();

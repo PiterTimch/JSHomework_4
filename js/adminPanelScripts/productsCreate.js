@@ -117,6 +117,8 @@ async function submitForm(event) {
         uploadedImageIds = [];
         document.getElementById("imageList").innerHTML = "";
         showErrorProductMessage("");
+
+        location.href = "/pages/adminPages/productsView.html";
     } catch (error) {
         showErrorProductMessage(error);
     } finally {
