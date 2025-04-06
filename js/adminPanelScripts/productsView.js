@@ -9,6 +9,12 @@
     document.getElementById("deleteModal").classList.remove("hidden");
 }
 
+function editProduct(event) {
+    const id = event.target.dataset.id;
+
+    location.href = `productEdit.html?id=${id}`;
+}
+
 async function fetchProducts() {
     try {
 
@@ -72,8 +78,6 @@ document.getElementById("confirmDeleteBtn").addEventListener("click", async () =
         console.error("Failed to delete product", error);
     }
 });
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();

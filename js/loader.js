@@ -32,5 +32,5 @@ function toggleUserMenu() {
     }
 }
 
-//window.API_BASE_URL = "https://goose.itstep.click";
-window.API_BASE_URL = "http://localhost:5227";
+window.API_BASE_URL = "https://goose.itstep.click";
+//window.API_BASE_URL = "http://localhost:5227";

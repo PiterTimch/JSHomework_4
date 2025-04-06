@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Admin panel</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="/js/loader.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/axios.min.js"></script>
+</head>
+<body>
+    <div id="loadingScreen" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <div class="flex flex-col items-center">
+            <div class="w-12 h-12 border-4 border-[#0db865] border-t-transparent rounded-full animate-spin"></div>
+            <p class="mt-4 text-[#0db865] text-lg font-semibold">Loading...</p>
+        </div>
+    </div>
+
+    <div class="w-[85%] mx-auto">
+        <script>loadDOM("/partials/header.html")</script>
+        <div class="grid grid-cols-6 h-screen">
+            <script>loadDOM("/partials/navAdminPanel.html")</script>
+
+            <div class="col-span-5 p-4" id="contentFrame">
+                <div class="flex items-center justify-center min-h-screen bg-gray-100 py-10">
+                    <div class="bg-white p-10 rounded-2xl shadow-xl w-full max-w-4xl animate-fade-in-up">
+                        <h2 class="text-3xl font-bold text-center text-[#0db865] mb-6">Edit Product</h2>
+                        <form id="editProductForm" class="space-y-6 max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md mt-10">
+                            <div class="col-span-2">
+                                <label for="titleEdit" class="block text-sm font-medium text-gray-700">Title</label>
+                                <input id="titleEdit" type="text" placeholder="Enter product title" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
+                            </div>
+
+                            <div class="col-span-2">
+                                <label for="priorityEdit" class="block text-sm font-medium text-gray-700">Priority</label>
+                                <input id="priorityEdit" type="number" step="1" placeholder="Enter priority" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
+                            </div>
+
+                            <div>
+                                <label for="categoryEdit" class="block text-sm font-medium text-gray-700">Category</label>
+                                <select id="categoryEdit" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
+                                    <option value="0">Select category</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="priceEdit" class="block text-sm font-medium text-gray-700">Price</label>
+                                <input id="priceEdit" type="number" step="0.01" placeholder="Enter price" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full">
+                            </div>
+
+                            <div class="col-span-2">
+                                <label for="descriptionEdit" class="block text-sm font-medium text-gray-700">Description</label>
+                                <textarea id="descriptionEdit" placeholder="Describe your product" class="p-3 border rounded-lg focus:ring-2 focus:ring-[#0db865] w-full h-32"></textarea>
+                            </div>
+
+                            <div class="col-span-2 border-2 border-dashed border-[#0db865] rounded-xl p-6 text-center cursor-pointer relative">
+                                <label for="fileInputEdit" class="block text-sm font-medium text-gray-700 mb-1">Photo</label>
+                                <input id="fileInputEdit" type="file" multiple class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" id="fileInput">
+                                <span class="text-gray-500">Drag or select photos</span>
+                            </div>
+
+                            <div id="imageListEdit" class="col-span-2 grid grid-cols-4 gap-4 mt-4"></div>
+
+                            <p id="productErrorMessageEdit" class="text-sm mb-2 text-[#c70000]"></p>
+
+                            <div class="col-span-2">
+                                <button type="submit" class="w-full bg-[#0db865] hover:bg-[#0aa650] text-white py-3 rounded-lg transition-all duration-300">
+                                    Publish Product
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out;
+        }
+    </style>
+
+    <script src="https://cdn.tiny.cloud/1/msp28lemwtyvod9k40ujq2ozfjsjny5ap66dtkdt2b1eqd6l/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+
+    <script src="/js/adminPanelScripts/productEdit.js"></script>
+</body>
+</html>
