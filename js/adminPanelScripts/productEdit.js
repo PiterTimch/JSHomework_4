@@ -1,9 +1,17 @@
-﻿let editProductForm;
-let uploadedImageIdsEdit = [];
+﻿let productModel = {
+    id: null,
+    name: '',
+    price: 0,
+    priority: 0,
+    categoryId: null,
+    description: '',
+    imageIds: [],
+    images: []
+};
+
+let editProductForm;
 let loadingOverlayEdit;
 let productErrorMessageEdit;
-let loadedProduct;
-let productId;
 
 async function loadProductCategories() {
     try {
@@ -32,9 +40,23 @@ function loadImageInputEdit() {
 
     new Sortable(document.getElementById('imageListEdit'), {
         animation: 150,
-        ghostClass: 'opacity-50'
+        ghostClass: 'opacity-50',
+        onEnd: updateImageOrderFromDOM
     });
 }
+
+function updateImageOrderFromDOM() {
+    const imageList = document.getElementById('imageListEdit');
+    const newIds = [];
+
+    imageList.querySelectorAll('div.relative').forEach(wrapper => {
+        const id = wrapper.dataset.id;
+        if (id) newIds.push(id);
+    });
+
+    productModel.imageIds = newIds;
+}
+
 
 async function uploadImageEdit(file, imageList) {
     const reader = new FileReader();
@@ -49,25 +71,10 @@ async function uploadImageEdit(file, imageList) {
             });
 
             const imageId = res.data.id;
-            uploadedImageIdsEdit.push(imageId);
+            productModel.imageIds.push(imageId);
+            productModel.images.push({ id: imageId, name: res.data.name });
 
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.classList.add('w-full', 'h-32', 'object-cover', 'rounded-lg', 'shadow-md');
-
-            const btn = document.createElement('button');
-            btn.innerHTML = 'X';
-            btn.classList.add('absolute', 'top-1', 'right-1', 'bg-red-500', 'text-white', 'text-sm', 'w-6', 'h-6', 'rounded-full', 'flex', 'items-center', 'justify-center', 'text-xl', 'font-bold', 'cursor-pointer');
-            btn.onclick = function () {
-                wrapper.remove();
-                uploadedImageIdsEdit = uploadedImageIdsEdit.filter(id => id !== imageId);
-            }
-
-            const wrapper = document.createElement('div');
-            wrapper.classList.add('relative', 'cursor-move');
-            wrapper.appendChild(img);
-            wrapper.appendChild(btn);
-
+            const wrapper = createImageWrapper(e.target.result, imageId);
             imageList.replaceChild(wrapper, placeholder);
         } catch (error) {
             console.error("Image upload failed", error);
@@ -77,47 +84,68 @@ async function uploadImageEdit(file, imageList) {
     reader.readAsDataURL(file);
 }
 
+function createImageWrapper(src, imageId) {
+    const img = document.createElement('img');
+    img.src = src;
+    img.classList.add(
+        'w-full', 'h-32', 'object-cover', 'rounded-lg', 'shadow-md'
+    );
+
+    const btn = document.createElement('button');
+    btn.innerHTML = 'X';
+    btn.classList.add(
+        'absolute', 'top-1', 'right-1', 'bg-red-500', 'text-white',
+        'text-sm', 'w-6', 'h-6', 'rounded-full', 'flex', 'items-center',
+        'justify-center', 'text-xl', 'font-bold', 'cursor-pointer'
+    );
+    btn.onclick = function () {
+        wrapper.remove();
+        productModel.imageIds = productModel.imageIds.filter(id => id !== imageId);
+        productModel.images = productModel.images.filter(img => img.id !== imageId);
+    };
+
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('relative', 'cursor-move');
+    wrapper.dataset.id = imageId;
+    wrapper.appendChild(img);
+    wrapper.appendChild(btn);
+
+    return wrapper;
+}
+
 function showEditProductError(error) {
     productErrorMessageEdit.innerText = error;
 }
 
 async function loadProductDataToForm() {
     try {
-        const response = await axios.get(`${window.API_BASE_URL}/api/Products/get/${productId}`);
-        loadedProduct = response.data;
+        const response = await axios.get(`${window.API_BASE_URL}/api/Products/get/${productModel.id}`);
+        const product = response.data;
 
-        document.getElementById("titleEdit").value = loadedProduct.name;
-        document.getElementById("priceEdit").value = loadedProduct.price;
-        document.getElementById("priorityEdit").value = loadedProduct.priority;
-        document.getElementById("categoryEdit").value = loadedProduct.categoryId;
-        tinymce.activeEditor.setContent(loadedProduct.description);
+        productModel = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            priority: product.priority,
+            categoryId: product.categoryId,
+            description: product.description,
+            imageIds: product.images.map(img => img.id),
+            images: product.images
+        };
+
+        document.getElementById("titleEdit").value = product.name;
+        document.getElementById("priceEdit").value = product.price;
+        document.getElementById("priorityEdit").value = product.priority;
+        document.getElementById("categoryEdit").value = product.categoryId;
+        tinymce.activeEditor.setContent(product.description);
 
         const imageList = document.getElementById("imageListEdit");
-
-        for (let img of loadedProduct.images) {
-            uploadedImageIdsEdit.push(img.id);
-
-            const wrapper = document.createElement('div');
-            wrapper.classList.add('relative', 'cursor-move');
-
-            const image = document.createElement("img");
-            image.src = `${window.API_BASE_URL}/images/400_${img.name}`;
-            image.classList.add("w-full", "h-32", "object-cover", "rounded-lg", "shadow-md");
-
-            const btn = document.createElement("button");
-            btn.innerHTML = "X";
-            btn.classList.add('absolute', 'top-1', 'right-1', 'bg-red-500', 'text-white', 'text-sm', 'w-6', 'h-6', 'rounded-full', 'flex', 'items-center', 'justify-center', 'text-xl', 'font-bold', 'cursor-pointer');
-            btn.onclick = () => {
-                wrapper.remove();
-                uploadedImageIdsEdit = uploadedImageIdsEdit.filter(id => id !== img.id);
-            };
-
-            wrapper.appendChild(image);
-            wrapper.appendChild(btn);
+        product.images.forEach(img => {
+            const wrapper = createImageWrapper(`${window.API_BASE_URL}/images/400_${img.name}`, img.id);
             imageList.appendChild(wrapper);
-        }
+        });
 
-        document.getElementById("loadingScreen").classList.add("hidden");
+        loadingOverlayEdit.classList.add("hidden");
     } catch (error) {
         console.error("Error loading product data", error);
     }
@@ -126,33 +154,31 @@ async function loadProductDataToForm() {
 async function submitEditProductForm(e) {
     e.preventDefault();
 
-    const name = document.getElementById("titleEdit").value.trim();
-    const price = parseFloat(document.getElementById("priceEdit").value);
-    const priority = parseFloat(document.getElementById("priorityEdit").value);
-    const categoryId = parseInt(document.getElementById("categoryEdit").value);
-    const description = tinymce.activeEditor.getContent();
+    productModel.name = document.getElementById("titleEdit").value.trim();
+    productModel.price = parseFloat(document.getElementById("priceEdit").value);
+    productModel.priority = parseFloat(document.getElementById("priorityEdit").value);
+    productModel.categoryId = parseInt(document.getElementById("categoryEdit").value);
+    productModel.description = tinymce.activeEditor.getContent();
 
-    if (!name || isNaN(price) || isNaN(priority) || uploadedImageIdsEdit.length === 0) {
+    if (!productModel.name || isNaN(productModel.price) || isNaN(productModel.priority) || productModel.imageIds.length === 0) {
         showEditProductError("Заповніть усі поля та додайте фото");
         return;
     }
 
     const productData = {
-        id: productId,
-        name,
-        price,
-        priority,
-        categoryId,
-        description,
-        image: uploadedImageIdsEdit[0],
-        ids: uploadedImageIdsEdit
+        id: productModel.id,
+        name: productModel.name,
+        price: productModel.price,
+        priority: productModel.priority,
+        categoryId: productModel.categoryId,
+        description: productModel.description,
+        image: productModel.imageIds[0],
+        ids: productModel.imageIds
     };
 
     try {
         loadingOverlayEdit.classList.remove("hidden");
-
         await axios.put(`${window.API_BASE_URL}/api/Products/edit`, productData);
-
         location.href = "/pages/adminPages/productsView.html";
     } catch (error) {
         showEditProductError(error?.response?.data?.error || "Сталася помилка");
@@ -165,6 +191,11 @@ async function loadEditProductForm() {
     loadingOverlayEdit = document.getElementById("loadingScreen");
     productErrorMessageEdit = document.getElementById("productErrorMessageEdit");
 
+    editProductForm = document.getElementById("editProductForm");
+    editProductForm.addEventListener("submit", submitEditProductForm);
+
+    productModel.id = new URLSearchParams(window.location.search).get("id");
+
     tinymce.init({
         selector: '#descriptionEdit',
         plugins: [
@@ -176,16 +207,15 @@ async function loadEditProductForm() {
             'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
             'forecolor backcolor emoticons | help',
         menubar: 'favs file edit view insert format tools table help',
+        setup: function (editor) {
+            editor.on('init', async function () {
+                await loadProductDataToForm();
+            });
+        }
     });
-
-    editProductForm = document.getElementById("editProductForm");
-    editProductForm.addEventListener("submit", submitEditProductForm);
-
-    productId = new URLSearchParams(window.location.search).get("id");
 
     await loadProductCategories();
     loadImageInputEdit();
-    await loadProductDataToForm();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
